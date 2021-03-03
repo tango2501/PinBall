@@ -16,7 +16,7 @@ public class StarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 回転
+        //回転
         this.transform.Rotate(0, this.rotSpeed, 0);
     }
 }

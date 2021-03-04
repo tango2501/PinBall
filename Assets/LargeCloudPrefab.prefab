@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 1613879611409643526}
   - component: {fileID: 1613879611409643530}
   m_Layer: 0
-  m_Name: LargeCloud
-  m_TagString: Untagged
+  m_Name: LargeCloudPrefab
+  m_TagString: LargeCloudTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

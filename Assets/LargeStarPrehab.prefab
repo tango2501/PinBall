@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 3606026522709902755}
   - component: {fileID: 3606026522709902780}
   m_Layer: 0
-  m_Name: LargeStar
-  m_TagString: Untagged
+  m_Name: LargeStarPrehab
+  m_TagString: LargeStarTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

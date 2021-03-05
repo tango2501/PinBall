@@ -11,6 +11,7 @@ public class FripperController : MonoBehaviour
     private float defaultAngle = 20f;
     //弾いたときの傾き
     private float frickAngle = -20f;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -20,13 +21,18 @@ public class FripperController : MonoBehaviour
         //フリッパーの傾きを設定
         SetAngle(this.defaultAngle);
         //上記二つでフリッパーの初期位置を設定している
+
+        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
         //左矢印キーとaキーを押したとき左フリッパーを動かす
-        if(Input.GetKeyDown(KeyCode.LeftArrow) | Input.GetKeyDown(KeyCode.A)  && tag == "LeftFripperTag")
+        if (Input.GetKeyDown(KeyCode.LeftArrow) | Input.GetKeyDown(KeyCode.A)  && tag == "LeftFripperTag")
         {
             SetAngle(this.frickAngle);
         }
@@ -47,13 +53,20 @@ public class FripperController : MonoBehaviour
             SetAngle(defaultAngle);
         }
         //Sキーと下矢印キーで両方のフリッパーを動かす
-        if (Input.GetKeyDown(KeyCode.S) | Input.GetKeyDown(KeyCode.DownArrow) && tag == "RightFripperTag" | tag == "LeftFripperTag")
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             SetAngle(this.frickAngle);
         }
-        if (Input.GetKeyUp(KeyCode.S) | Input.GetKeyUp(KeyCode.DownArrow) && tag == "RightFripperTag" | tag == "LeftFripperTag")
+        if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow))
         {
             SetAngle(defaultAngle);
+        }
+
+
+        //タッチが効いているかどうかの確認用
+        if (Input.touchCount == 1 )
+        {
+            Debug.Log("1");
         }
 
 

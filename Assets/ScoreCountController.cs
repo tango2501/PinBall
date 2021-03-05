@@ -40,8 +40,8 @@ public class ScoreCountController : MonoBehaviour
     {
         
     }
-
-    private void OnCollisionEnter(Collision other)
+    //スコア情報を画面上に反映する関数
+    public void Add(Collision tag)
     {
         
         this.scoreCount.text = scorecounter.ToString();

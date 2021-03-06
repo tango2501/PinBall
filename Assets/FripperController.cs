@@ -12,9 +12,10 @@ public class FripperController : MonoBehaviour
     //弾いたときの傾き
     private float frickAngle = -20f;
     //タッチポジション格納
-    private Vector2 TouchPos;
+    private Vector2 touchPos;
     //タッチ状態確認
-    private TouchPhase touchphase;
+    private TouchPhase  touchphase;
+    
 
 
     // Start is called before the first frame update
@@ -33,6 +34,7 @@ public class FripperController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //タッチ追跡用
         
 
         //左矢印キーとaキーを押したとき左フリッパーを動かす
@@ -70,15 +72,101 @@ public class FripperController : MonoBehaviour
         //タッチが効いているかどうかの確認用
         if (Input.touchCount > 0)
         {
+            /*
+            int i = Input.touchCount;
+            var finid = Input.GetTouch(0);
+            */
+            /*
+            int tes = Input.GetTouch(0).fingerId;
+
+            Touch i = Input.touches;*/
+            Touch[] myTouches = Input.touches;
+
+            for (int i = 0; i < myTouches.Length; i++)
+            {
+                touchphase = Input.GetTouch(i).phase;
+                touchPos = Input.GetTouch(i).position;
+                int righttouch = Input.GetTouch(i).fingerId;
+                int lefttouch = Input.GetTouch(i).fingerId;
+
+                if (touchPos.x > (Screen.width / 2) && touchphase == TouchPhase.Began && tag == "RightFripperTag")
+                {
+                    SetAngle(this.frickAngle);
+                    Debug.Log("rightup");
+                    Debug.Log(righttouch);
+                }
+                if (touchphase == TouchPhase.Ended && righttouch == Input.GetTouch(i).fingerId && tag == "RightFripperTag")
+                {
+                    SetAngle(defaultAngle);
+                    Debug.Log("rightdown");
+                    Debug.Log(righttouch);
+                }
+
+
+
+                if (touchPos.x < (Screen.width / 2) && touchphase == TouchPhase.Began && tag == "LeftFripperTag")
+                {
+                    
+                    SetAngle(this.frickAngle);
+                    Debug.Log("leftup");
+                    Debug.Log(lefttouch);
+                    
+                }
+                if (touchphase == TouchPhase.Ended && lefttouch == Input.GetTouch(i).fingerId && tag == "LeftFripperTag")
+                {
+                    SetAngle(defaultAngle);
+                    Debug.Log("leftdown");
+                    Debug.Log(lefttouch);
+                }
+
+
+
+            }
+
+
+
+
+
+
+
+            /*
             touchphase = Input.GetTouch(0).phase;
-            TouchPos = Input.GetTouch(0).position;
+            touchPos = Input.GetTouch(0).position;
+            
+
             //Debug.Log(TouchPos);
 
-            if(TouchPos.x > (Screen.width /2) &&  touchphase == TouchPhase.Began && tag == "RightFripperTag")
+            if (touchPos.x > (Screen.width /2) &&  touchphase == TouchPhase.Began && tag == "RightFripperTag")
             {
+                int righttouch = Input.GetTouch(0).fingerId;
+
+                
                 SetAngle(this.frickAngle);
                 Debug.Log("rightup");
+                if (touchphase == TouchPhase.Ended && righttouch == Input.GetTouch(0).fingerId && tag == "RightFripperTag")
+                {
+                    SetAngle(defaultAngle);
+                    Debug.Log("rightdown");
+                }
             }
+            */
+
+
+            /*
+            if (touchPos.x < (Screen.width / 2) && touchphase == TouchPhase.Began && tag == "LeftFripperTag")
+            {
+
+                SetAngle(this.frickAngle);
+                Debug.Log("leftup");
+            }
+            if (touchphase == TouchPhase.Ended && finid.fingerId == i && tag == "LeftFripperTag")
+            {
+                SetAngle(defaultAngle);
+                Debug.Log("leftdown");
+            }
+            */
+
+            /*
             else if(TouchPos.x < (Screen.width / 2) && touchphase == TouchPhase.Began && tag == "LeftFripperTag")
             {
                 SetAngle(this.frickAngle);
@@ -95,7 +183,7 @@ public class FripperController : MonoBehaviour
                 SetAngle(defaultAngle);
                 Debug.Log("leftdown");
             }
-
+            */
 
 
         }

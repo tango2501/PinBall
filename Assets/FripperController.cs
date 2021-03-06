@@ -11,7 +11,11 @@ public class FripperController : MonoBehaviour
     private float defaultAngle = 20f;
     //弾いたときの傾き
     private float frickAngle = -20f;
-    
+    //タッチポジション格納
+    private Vector2 TouchPos;
+    //タッチ状態確認
+    private TouchPhase touchphase;
+
 
     // Start is called before the first frame update
     void Start()
@@ -60,15 +64,42 @@ public class FripperController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow))
         {
             SetAngle(defaultAngle);
-        }
-
-
+        }  
+        
+        
         //タッチが効いているかどうかの確認用
-        if (Input.touchCount == 1 )
+        if (Input.touchCount > 0)
         {
-            Debug.Log("1");
-        }
+            touchphase = Input.GetTouch(0).phase;
+            TouchPos = Input.GetTouch(0).position;
+            //Debug.Log(TouchPos);
 
+            if(TouchPos.x > (Screen.width /2) &&  touchphase == TouchPhase.Began && tag == "RightFripperTag")
+            {
+                SetAngle(this.frickAngle);
+                Debug.Log("rightup");
+            }
+            else if(TouchPos.x < (Screen.width / 2) && touchphase == TouchPhase.Began && tag == "LeftFripperTag")
+            {
+                SetAngle(this.frickAngle);
+                Debug.Log("left");
+            }
+
+            if (TouchPos.x > (Screen.width / 2) && touchphase == TouchPhase.Ended && tag == "RightFripperTag")
+            {
+                SetAngle(defaultAngle);
+                Debug.Log("rightdown");
+            }
+            else if (TouchPos.x < (Screen.width / 2) && touchphase == TouchPhase.Ended && tag == "LeftFripperTag")
+            {
+                SetAngle(defaultAngle);
+                Debug.Log("leftdown");
+            }
+
+
+
+        }
+        
 
 
     }

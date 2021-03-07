@@ -11,13 +11,17 @@ public class FripperController : MonoBehaviour
     private float defaultAngle = 20f;
     //弾いたときの傾き
     private float frickAngle = -20f;
-    //タッチポジション格納
+    //タッチされた座標
     private Vector2 touchPos;
-    //タッチ状態確認
+    //タッチ状態
     private TouchPhase touchphase;
-    
 
-
+    //ID保存用
+    Touch Rtouch;
+    Touch Ltouch;
+    //状態保存用
+    TouchPhase Rtouchp;
+    TouchPhase Ltouchp;
 
     // Start is called before the first frame update
     void Start()
@@ -35,9 +39,6 @@ public class FripperController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //タッチ追跡用
-
-
         //左矢印キーとaキーを押したとき左フリッパーを動かす
         if (Input.GetKeyDown(KeyCode.LeftArrow) | Input.GetKeyDown(KeyCode.A) && tag == "LeftFripperTag")
         {
@@ -69,62 +70,55 @@ public class FripperController : MonoBehaviour
             SetAngle(defaultAngle);
         }
 
-
-        //タッチが効いているかどうかの確認用
+        //タッチの検出
         if (Input.touchCount > 0)
         {
-            
-            Touch[] myTouches = Input.touches;
-
-            for (int i = 0; i < myTouches.Length; i++)
+            //タッチした指の数だけ以下の処理をする
+            for (int i = 0; i < Input.touchCount; i++)
             {
-                myTouches[i].fingerId = Input.GetTouch(i).fingerId;
-                touchphase = Input.GetTouch(i).phase;
-                touchPos = Input.GetTouch(i).position;
-                /*
-                int righttouch = Input.GetTouch(i).fingerId;
-                int lefttouch = Input.GetTouch(i).fingerId;
-                */
 
+                //タッチした指の状態を管理
+                touchphase = Input.GetTouch(i).phase;
+                //タッチした指の座標を管理
+                touchPos = Input.GetTouch(i).position;
+
+                //タッチされた時の座標によって上げるフリッパーを選び、フリッパーを上げる
                 if (touchPos.x > (Screen.width / 2) && touchphase == TouchPhase.Began && tag == "RightFripperTag")
                 {
+                    //右フリッパーを上げた指の情報を記憶
+                    Rtouchp = Input.GetTouch(i).phase;
+                    Rtouch.fingerId = Input.GetTouch(i).fingerId;
                     
+                    //フリッパーを上げる
                     SetAngle(this.frickAngle);
                     Debug.Log("rightup");
                     //Debug.Log(righttouch);
                 }
-                if (touchPos.x > (Screen.width / 2) && touchphase == TouchPhase.Ended && tag == "RightFripperTag")
+                if (touchPos.x < (Screen.width / 2) && touchphase == TouchPhase.Began && tag == "LeftFripperTag")
+                {
+                    //左フリッパーを上げた指の情報を記憶
+                    Ltouchp = Input.GetTouch(i).phase;
+                    Ltouch.fingerId = Input.GetTouch(i).fingerId;
+
+                    //フリッパーを上げる
+                    SetAngle(this.frickAngle);
+                    Debug.Log("leftup");
+                    
+                }
+
+                //指が離れたときにその指のIDを参照して、その指が上げたフリッパーを下げる
+                if (Input.GetTouch(i).phase == TouchPhase.Ended && Input.GetTouch(i).fingerId == Rtouch.fingerId && tag == "RightFripperTag")
                 {
                     SetAngle(defaultAngle);
                     Debug.Log("rightdown");
-                    //Debug.Log(righttouch);
                 }
-
-
-
-                if (touchPos.x < (Screen.width / 2) && touchphase == TouchPhase.Began && tag == "LeftFripperTag")
-                {
-                    
-                    SetAngle(this.frickAngle);
-                    Debug.Log("leftup");
-                    //Debug.Log(lefttouch);
-
-                }
-                if (touchPos.x < (Screen.width / 2) && touchphase == TouchPhase.Ended && tag == "LeftFripperTag")
+                if (Input.GetTouch(i).phase == TouchPhase.Ended && Input.GetTouch(i).fingerId == Ltouch.fingerId && tag == "LeftFripperTag")
                 {
                     SetAngle(defaultAngle);
                     Debug.Log("leftdown");
-                    //Debug.Log(lefttouch);
                 }
-
-
-
             }
-
         }
-
-
-
     }
     //フリッパーの傾きを設定
     public void SetAngle(float angle)

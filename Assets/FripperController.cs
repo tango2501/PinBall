@@ -15,6 +15,7 @@ public class FripperController : MonoBehaviour
     private Vector2 touchPos;
     //タッチ状態確認
     private TouchPhase touchphase;
+    
 
 
 
@@ -26,6 +27,8 @@ public class FripperController : MonoBehaviour
         //フリッパーの傾きを設定
         SetAngle(this.defaultAngle);
         //上記二つでフリッパーの初期位置を設定している
+
+
 
     }
 
@@ -75,38 +78,46 @@ public class FripperController : MonoBehaviour
 
             for (int i = 0; i < myTouches.Length; i++)
             {
+                myTouches[i].fingerId = Input.GetTouch(i).fingerId;
                 touchphase = Input.GetTouch(i).phase;
                 touchPos = Input.GetTouch(i).position;
+                /*
                 int righttouch = Input.GetTouch(i).fingerId;
                 int lefttouch = Input.GetTouch(i).fingerId;
+                */
 
                 if (touchPos.x > (Screen.width / 2) && touchphase == TouchPhase.Began && tag == "RightFripperTag")
                 {
+                    
                     SetAngle(this.frickAngle);
                     Debug.Log("rightup");
-                    Debug.Log(righttouch);
+                    //Debug.Log(righttouch);
                 }
-                if (touchphase == TouchPhase.Ended && righttouch == Input.GetTouch(i).fingerId && tag == "RightFripperTag")
+                if (touchPos.x > (Screen.width / 2) && touchphase == TouchPhase.Ended && tag == "RightFripperTag")
                 {
                     SetAngle(defaultAngle);
                     Debug.Log("rightdown");
-                    Debug.Log(righttouch);
+                    //Debug.Log(righttouch);
                 }
+
+
 
                 if (touchPos.x < (Screen.width / 2) && touchphase == TouchPhase.Began && tag == "LeftFripperTag")
                 {
-
+                    
                     SetAngle(this.frickAngle);
                     Debug.Log("leftup");
-                    Debug.Log(lefttouch);
+                    //Debug.Log(lefttouch);
 
                 }
-                if (touchphase == TouchPhase.Ended && lefttouch == Input.GetTouch(i).fingerId && tag == "LeftFripperTag")
+                if (touchPos.x < (Screen.width / 2) && touchphase == TouchPhase.Ended && tag == "LeftFripperTag")
                 {
                     SetAngle(defaultAngle);
                     Debug.Log("leftdown");
-                    Debug.Log(lefttouch);
+                    //Debug.Log(lefttouch);
                 }
+
+
 
             }
 

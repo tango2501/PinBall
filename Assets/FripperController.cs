@@ -39,6 +39,7 @@ public class FripperController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+#if UNITY_EDITOR
         //左矢印キーとaキーを押したとき左フリッパーを動かす
         if (Input.GetKeyDown(KeyCode.LeftArrow) | Input.GetKeyDown(KeyCode.A) && tag == "LeftFripperTag")
         {
@@ -69,7 +70,8 @@ public class FripperController : MonoBehaviour
         {
             SetAngle(defaultAngle);
         }
-
+#endif
+#if UNITY_ANDROID
         //タッチの検出
         if (Input.touchCount > 0)
         {
@@ -119,6 +121,7 @@ public class FripperController : MonoBehaviour
                 }
             }
         }
+#endif
     }
     //フリッパーの傾きを設定
     public void SetAngle(float angle)
